@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h1>Eliminar Pedido</h1>
+        <div>
+            <h2>¿Esta seguro de eliminar el pedido?</h2>
+            <div>
+                <form action="" method="POST">
+                    {{form.as_p}}
+                    {% csrf_token %}
+                    <button>Confirmar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
