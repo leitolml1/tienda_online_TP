@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import Pedidos,ProductoPedido
-from .forms import FormPedido,ProductoPedidoForm
+from .forms import FormPedido,ProductoPedidoForm,CrearPedido
 # Create your views here.
 
 def pedidos(request):
@@ -11,6 +11,20 @@ def pedidos(request):
     return render(request,"pedidos.html",{
         "pedidos":pedidos
     })
+def crearPedido(request):
+    id=None
+    if request.method=="POST":
+        form=CrearPedido(request.POST)
+        if form.is_valid():
+            nuevoPedido=form.save(commit=False)
+            nuevoPedido.save()
+            id=nuevoPedido.id
+
+        return redirect("agregarProductos",id=id)
+    else:
+        return render(request,"crearPedido.html",{
+            "form":CrearPedido(),
+        })
 def eliminarPedido(request,id):
     pedido=get_object_or_404(Pedidos,id=id)
     if request.method=="POST":
