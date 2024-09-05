@@ -15,7 +15,7 @@ class  Pedidos(models.Model):
 
 
 class  ProductoPedido(models.Model):
-    producto=models.ForeignKey(Productos,on_delete=models.SET_DEFAULT,default=1,related_name='pedidos_producto')
+    producto=models.ForeignKey(Productos,on_delete=models.SET_DEFAULT,default=None,related_name='pedidos_producto')
     pedido=models.ForeignKey(Pedidos,on_delete=models.CASCADE,default=1,related_name='productos_pedido_set')
     cantidad_producto=models.IntegerField(default=0)
 

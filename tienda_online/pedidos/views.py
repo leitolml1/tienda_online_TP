@@ -52,13 +52,21 @@ def editarPedido(request,id):
         if instanciar_pedido.is_valid():
             instanciar_pedido.save()
             return redirect("pedidos")
-def eliminar_producto_pedido(request,id):
-    pedido_producto=get_object_or_404(ProductoPedido,id=id)
-    pedido_id = pedido_producto.pedido.id  # Obtener el id del pedido asociado al producto
-    if request.method=="POST":
+def eliminar_producto_pedido(request, id):
+    print(f"Intentando eliminar el producto con ID {id}")
+    pedido_producto = get_object_or_404(ProductoPedido, id=id)
+    print(f"Producto encontrado: {pedido_producto}")
+    
+    if request.method == "POST":
         pedido_producto.delete()
+        print(f"Producto {id} eliminado")
+        
+        pedido_id = pedido_producto.pedido.id
+        pedido = Pedidos.objects.get(id=pedido_id)
+        pedido.total_pedido = sum(producto.subtotal() for producto in pedido.productos_pedido_set.all())
+        pedido.save()
+        
         return redirect('editarPedido', id=pedido_id)
-
 
 def agregarProductoPedido(request,id):
     pedido = get_object_or_404(Pedidos, id=id)

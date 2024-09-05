@@ -28,36 +28,35 @@
                                     <th></th>
                                   </tr>
                                 </thead>
-                                <tbody>
-                                  {% for produc in productosXpedido %}
-                                  <tr>
-                                    <th scope="row">{{produc.id}}</th>
-                                    <td>{{produc.producto.nombre}}</td>
-                                    <td>{{produc.cantidad_producto}}</td>
-                                    <td>{{produc.subtotal}}</td>
-                                    <td>
-                                        <form action="{% url 'eliminar_producto_pedido' produc.id %}" method="POST">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn btn-outline-danger" >X</button>
-
-                                        </form>
-                                    </td>
-                                  </tr>
-                                  {% endfor %}
-                                  <tr>
-                                    <th>Total</th>
-                                    <td></td>
-                                    <td></td>
-                                    <td colspan="3">{{pedido.total_pedido}}</td>
-                                  </tr>
-                                </tbody>
-                              </table>
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-success mr-2">Guardar</button>
                             <button type="button" class="btn btn-secondary">Cancelar</button>
                         </div>
                     </form>
+                    <tbody>
+                        {% for producto in productosXpedido %}
+                        <tr>
+                          <th scope="row">{{producto.id}}</th>
+                          <td>{{producto.producto.nombre}}</td>
+                          <td>{{producto.cantidad_producto}}</td>
+                          <td>{{producto.subtotal}}</td>
+                          <td>
+                              <form action="{% url 'eliminar_producto_pedido' producto.id %}" method="POST">
+                                  {% csrf_token %}
+                                  <button type="submit" class="btn btn-outline-danger" >Eliminar</button>
+                              </form>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                          <th>Total</th>
+                          <td></td>
+                          <td></td>
+                          <td colspan="3">{{pedido.total_pedido}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
                 </div>
                 <div class="card p-4 shadow-sm">
                     <h2>Agregar Productos</h2>
